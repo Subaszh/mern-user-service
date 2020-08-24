@@ -1,0 +1,8 @@
+.button-holder {
+  display: flex;
+  justify-content: space-between;
+}
+.button-holder .MuiButtonBase-root {
+  display: block;
+  width: calc(50% - 8px);
+}

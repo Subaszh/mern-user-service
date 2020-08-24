@@ -1,17 +1,27 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom'
+import { Grid, Card, CardContent } from '@material-ui/core';
+
+import { LoginPage, RegistrationPage, ResetPasswordPage, CompaniesPage } from './pages';
 import './App.css';
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import { LoginPage, RegistrationPage } from './pages';
 
 function App() {
   return (
     <BrowserRouter>
-      <Switch>
-        <Route path="/login" component={LoginPage} />
-        <Route path="/reset" component={LoginPage} />
-        <Route path="/register" component={RegistrationPage} />
-        <Route path="/companies" component={RegistrationPage} />
-      </Switch>
+      <Grid container className="center-container" justify="center" alignItems="center">
+        <Grid item xs={8} sm={4}>
+          <Card className="center-card">
+            <CardContent>
+              <Switch>
+                <Route exact path="/" render={() => <Redirect to="/login" />} />
+                <Route path="/login" component={LoginPage} />
+                <Route path="/reset" component={ResetPasswordPage} />
+                <Route path="/register" component={RegistrationPage} />
+              </Switch>
+            </CardContent>
+          </Card>
+        </Grid>
+      </Grid>
     </BrowserRouter>
   );
 }

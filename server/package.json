@@ -5,7 +5,7 @@
   "nodemonConfig": {
     "exec": "npm run dev",
     "watch": [
-      "server/app/*"
+      "app/*"
     ],
     "ignore": [
       "**/__tests__/**",
@@ -15,11 +15,11 @@
   },
   "scripts": {
     "build": "npm-run-all clean transpile",
-    "server": "node ../build/server/index.js",
+    "server": "node ../build/server/bin/www.js",
     "dev": "npm-run-all build server",
-    "transpile": "babel ./app --out-dir ../build/server",
+    "transpile": "babel ./app --out-dir ../build/server && cp -r node_modules ../build/node_modules",
     "clean": "rimraf ../build/server",
-    "watch:dev": "nodemon"
+    "start": "nodemon"
   },
   "babel": {
     "presets": [
