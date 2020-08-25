@@ -1,17 +1,46 @@
 import React from 'react';
 import { useHistory } from "react-router-dom";
-import { TextField, Button } from '@material-ui/core';
+import { useForm, Controller } from "react-hook-form";
+import {TextField, Button} from '@material-ui/core';
 
 import './login.page.css'
 
 export const LoginPage = () => {
   const history = useHistory();
-  return <form className="users-form" noValidate autoComplete="off">
-    <TextField className="form-item form-input" label="User Name" variant="outlined" />
-    <TextField className="form-item form-input" label="Email" variant="outlined" />
-    <TextField className="form-item form-input" label="Password" variant="outlined" type="password"/>
+  const { control, errors, handleSubmit, formState } = useForm({
+    mode: 'onBlur',
+    reValidateMode: 'onBlur'
+  });
+
+  const onSubmit = data => {
+    console.log(data)
+  };
+
+  return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+    <Controller
+        as={TextField}
+        name="email"
+        control={control}
+        rules={{required: true, minLength: 5}}
+        defaultValue=""
+        variant="outlined"
+        label="Email Address" 
+        className="form-item form-input"
+        helperText={errors?.email?.message ? "" : errors?.email?.message}
+      />
+    <Controller
+        as={TextField}
+        name="password"
+        control={control}
+        rules={{required: true}}
+        defaultValue=""
+        variant="outlined"
+        label="Password" 
+        className="form-item form-input"
+        type="password"
+      />
     <div className="button-holder">
-      <Button variant="contained" color="primary" > Login </Button>
+      <Button variant="contained" color="primary" disabled={!formState.isValid} type="submit"> Login </Button>
       <Button variant="outlined" color="primary" onClick={() => history.push('/register')}> Register </Button>
     </div>
   </form>
