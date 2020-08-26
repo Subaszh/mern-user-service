@@ -20,5 +20,5 @@ const userSchema = Schema({
   updatedAt: Date
 })
 
-userSchema.plugin(uniqueValidator, { message: '{PATH} already being used'})
+userSchema.plugin(uniqueValidator, { message: 'already being used'})
 export const Users = mongoose.model('User', userSchema)

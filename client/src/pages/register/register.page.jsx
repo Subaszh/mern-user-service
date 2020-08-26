@@ -16,7 +16,7 @@ export const RegistrationPage = () => {
       const { data } = await axios.post('http://localhost:3000/users/register', formData)
       history.push('/login')
     } catch(e) {
-      alert(e?.response.data.error || e)
+      alert(e?.response.data.error?.message || e)
     }
   };
 
@@ -25,8 +25,7 @@ export const RegistrationPage = () => {
         as={TextField}
         name="name"
         control={control}
-        rules={{required: true, minLength: 5}}
-        defaultValue="Subash"
+        rules={{required: true}}
         variant="outlined"
         label="User Name" 
         className="form-item form-input"
@@ -36,8 +35,7 @@ export const RegistrationPage = () => {
         as={TextField}
         name="email"
         control={control}
-        rules={{required: true, minLength: 5}}
-        defaultValue="Subaszhmail@gmail.com"
+        rules={{required: true}}
         variant="outlined"
         label="Email Address" 
         className="form-item form-input"
@@ -48,7 +46,6 @@ export const RegistrationPage = () => {
         name="password"
         control={control}
         rules={{required: true}}
-        defaultValue="test"
         variant="outlined"
         label="Password" 
         className="form-item form-input"

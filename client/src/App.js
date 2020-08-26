@@ -6,24 +6,23 @@ import { LoginPage, RegistrationPage, ResetPasswordPage, CompaniesPage } from '.
 import './App.css';
 
 function App() {
-  const isLoggedIn = localStorage.getItem('userId')
   return (
     <BrowserRouter>
-      <Grid container className="center-container" justify="center" alignItems="center">
-        <Grid item xs={8} sm={4}>
-          <Card className="center-card">
-            <CardContent>
-              <Switch>
-                <Route exact path="/" render={() => <Redirect to="/login" />} />
+      <Switch>
+        <Route path="/companies" component={CompaniesPage} />
+        <Grid container className="center-container" justify="center" alignItems="center">
+          <Grid item xs={8} sm={4}>
+            <Card className="center-card">
+              <CardContent>
+                <Route path="/" render={() => <Redirect to="/login" />} />
                 <Route path="/login" component={LoginPage} />
                 <Route path="/reset" component={ResetPasswordPage} />
                 <Route path="/register" component={RegistrationPage} />
-                <Route path="/companies" component={CompaniesPage} />
-              </Switch>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </Grid>
         </Grid>
-      </Grid>
+      </Switch>
     </BrowserRouter>
   );
 }

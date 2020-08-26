@@ -65,9 +65,9 @@ router.put('/:userId/mark-favorite/:companyId', asyncHandler(async(req, res) => 
 router.put('/:userId/unmark-favorite/:companyId', asyncHandler(async(req, res) => {
   const {userId, companyId} = req.params
   const user = await checkIfUserExists('_id', userId)
-  const favIndex = user.favoriteCompanies.indexOf(companyId) > -1
+  const favIndex = user.favoriteCompanies.indexOf(companyId)
   if (favIndex > -1) {
-    user.favoriteCompanies = [...user.favoriteCompanies.splice(favIndex, 1)]
+    user.favoriteCompanies.splice(favIndex, 1)
     user.updatedAt = new Date()
     await user.save()
     res.send({message: "Company removed from favorite", data: user.favoriteCompanies})

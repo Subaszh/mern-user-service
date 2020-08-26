@@ -1,0 +1,44 @@
+[
+  {
+    "name": "Apple",
+    "permalink": "apple",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  },
+  {
+    "name": "Tesla",
+    "permalink": "tesla",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  },
+  {
+    "name": "Samsung",
+    "permalink": "samsung",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  },
+  {
+    "name": "Xiaomi",
+    "permalink": "redmi",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  },
+  {
+    "name": "Huewei",
+    "permalink": "huewei",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  },
+  {
+    "name": "Pixel",
+    "permalink": "pixel",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  },
+  {
+    "name": "Alphabet",
+    "permalink": "alphabet",
+    "phone": "+91 - 9876543210",
+    "address": "Address"
+  }
+]

@@ -16,11 +16,11 @@ export const LoginPage = () => {
 
   const onSubmit = async (formData) => {
     try {
-      const { data } = await axios.post('http://localhost:3000/users/login', formData)
+      const { data } = await axios.post('/users/login', formData)
       localStorage.setItem('userId', data.id)
       history.push('/companies')
     } catch(e) {
-      alert(e?.response.data.error || e)
+      alert(e?.response.data.error?.message || e)
     }
   };
 

@@ -20,4 +20,17 @@ router.post('/', async(req, res) => {
   }
 })
 
+// router.post('/bulk-upload', async(req, res) => {
+//   try {
+//     for(let company of req.body) {
+//       const newC = await createCompany(company)
+//       await Companies.create(newC)
+//     }
+//     res.send({message: "Companies created successfully"})
+//   } catch(e) {
+//     res.status(500)
+//     res.send({error: e.errors.permalink.properties.message})
+//   }
+// })
+
 export default router;
