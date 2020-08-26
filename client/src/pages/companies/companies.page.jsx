@@ -3,5 +3,11 @@ import { useHistory } from "react-router-dom";
 import { TextField, Button } from '@material-ui/core';
 
 export const CompaniesPage = () => {
-  return <></>
+  const history = useHistory();
+  const userId = localStorage.getItem('userId')
+
+  if (!userId) {
+    history.push('/login')
+  }
+  return <div>Test</div>
 }

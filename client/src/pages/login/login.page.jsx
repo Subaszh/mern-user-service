@@ -2,18 +2,26 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import {TextField, Button} from '@material-ui/core';
+import axios from 'axios'
 
 import './login.page.css'
 
 export const LoginPage = () => {
   const history = useHistory();
+  
   const { control, errors, handleSubmit, formState } = useForm({
     mode: 'onBlur',
     reValidateMode: 'onBlur'
   });
 
-  const onSubmit = data => {
-    console.log(data)
+  const onSubmit = async (formData) => {
+    try {
+      const { data } = await axios.post('http://localhost:3000/users/login', formData)
+      localStorage.setItem('userId', data.id)
+      history.push('/companies')
+    } catch(e) {
+      alert(e?.response.data.error || e)
+    }
   };
 
   return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -22,7 +30,6 @@ export const LoginPage = () => {
         name="email"
         control={control}
         rules={{required: true, minLength: 5}}
-        defaultValue=""
         variant="outlined"
         label="Email Address" 
         className="form-item form-input"
@@ -33,7 +40,6 @@ export const LoginPage = () => {
         name="password"
         control={control}
         rules={{required: true}}
-        defaultValue=""
         variant="outlined"
         label="Password" 
         className="form-item form-input"

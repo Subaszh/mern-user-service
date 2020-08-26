@@ -6,6 +6,7 @@ import { LoginPage, RegistrationPage, ResetPasswordPage, CompaniesPage } from '.
 import './App.css';
 
 function App() {
+  const isLoggedIn = localStorage.getItem('userId')
   return (
     <BrowserRouter>
       <Grid container className="center-container" justify="center" alignItems="center">
@@ -17,6 +18,7 @@ function App() {
                 <Route path="/login" component={LoginPage} />
                 <Route path="/reset" component={ResetPasswordPage} />
                 <Route path="/register" component={RegistrationPage} />
+                <Route path="/companies" component={CompaniesPage} />
               </Switch>
             </CardContent>
           </Card>

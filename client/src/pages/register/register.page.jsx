@@ -2,8 +2,7 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
-
-// import './login.page.css'
+import axios from 'axios'
 
 export const RegistrationPage = () => {
   const history = useHistory();
@@ -12,17 +11,22 @@ export const RegistrationPage = () => {
     reValidateMode: 'onBlur'
   });
 
-  const onSubmit = data => {
-    console.log(data)
+  const onSubmit = async (formData) => {
+    try {
+      const { data } = await axios.post('http://localhost:3000/users/register', formData)
+      history.push('/login')
+    } catch(e) {
+      alert(e?.response.data.error || e)
+    }
   };
 
   return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
     <Controller
         as={TextField}
-        name="userName"
+        name="name"
         control={control}
         rules={{required: true, minLength: 5}}
-        defaultValue=""
+        defaultValue="Subash"
         variant="outlined"
         label="User Name" 
         className="form-item form-input"
@@ -33,7 +37,7 @@ export const RegistrationPage = () => {
         name="email"
         control={control}
         rules={{required: true, minLength: 5}}
-        defaultValue=""
+        defaultValue="Subaszhmail@gmail.com"
         variant="outlined"
         label="Email Address" 
         className="form-item form-input"
@@ -44,7 +48,7 @@ export const RegistrationPage = () => {
         name="password"
         control={control}
         rules={{required: true}}
-        defaultValue=""
+        defaultValue="test"
         variant="outlined"
         label="Password" 
         className="form-item form-input"

@@ -2,11 +2,21 @@
   "name": "user-services-client",
   "version": "0.1.0",
   "private": true,
+  "watch": {
+    "build": {
+      "patterns": [
+        "src"
+      ],
+      "extensions": "js,jsx"
+    }
+  },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.20.0",
+    "npm-watch": "^0.7.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-hook-form": "^6.5.3",
@@ -14,6 +24,7 @@
     "react-scripts": "3.4.3"
   },
   "scripts": {
+    "watch": "npm-watch build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
