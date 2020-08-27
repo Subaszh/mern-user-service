@@ -56,11 +56,11 @@ const removeFavorite = async(companyId) => {
   }
 }
 
-const searchCompanies = async (searchFor) => {
+const searchCompanies = async (searchFor, order) => {
   try {
     const {data} = await axios.get(`http://localhost:3000/companies/search?query=${
       searchFor
-    }`)
+    }&sortOrder=${order}`)
     return data
   } catch (e) {
     throw e

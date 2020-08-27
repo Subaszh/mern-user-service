@@ -20,10 +20,10 @@ export const createCompany = ({
 }
 
 
-export const findCompaniesWithName = async (search) => {
+export const findCompaniesWithName = async (search, sortOrder = "asc") => {
   const searchRegex = new RegExp(search, 'i');
   const companies = await Companies.find({
     name: searchRegex
-  })
+  }).sort({name: sortOrder})
   return companies
 }

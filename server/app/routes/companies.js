@@ -4,8 +4,8 @@ import { Companies } from '../models';
 const router = express.Router();
 
 router.get('/search', async(req, res) => {
-  const {query} = req.query;
-  const companies = await findCompaniesWithName(query)
+  const {query, sortOrder} = req.query;
+  const companies = await findCompaniesWithName(query, sortOrder)
   res.send(companies)
 })
 

@@ -21,21 +21,25 @@ export const CompaniesPage = () => {
   const [companiesState, setState] = useReducer(reducer, {
     favorites: [],
     searchResults: [],
-    searchString: ""
+    searchString: "",
+    sortOrder: "asc"
   })
 
-  const onSearchChange = async (searchFor) => {
-    if (searchFor === companiesState.searchString) 
+  const onSearchChange = async (searchFor, sort) => {
+    if (searchFor === companiesState.searchString && sort === companiesState.sortOrder) 
       return;
-    setState({searchString: searchFor})
+    setState({searchString: searchFor, sortOrder: sort})
   }
 
   useEffect(() => {
-    if (companiesState.searchString.length === 0) 
-      return;
-    UserService.searchCompanies(companiesState.searchString)
+    if (companiesState.searchString.length === 0) {
+      setState({searchResults: [] })
+      return
+    }
+
+    UserService.searchCompanies(companiesState.searchString, companiesState.sortOrder)
       .then(data => setState({searchResults: data}))
-  }, [companiesState.searchString])
+  }, [companiesState.searchString, companiesState.sortOrder])
 
   const markFavorite = (company) => {
     UserService.markFavorite(company._id).then(() => fetchFavorites())
@@ -54,7 +58,7 @@ export const CompaniesPage = () => {
   }, [])
 
   return <>
-    <TopBar onChange={onSearchChange}/>
+    <TopBar onSearchChange={onSearchChange} />
     <div style={{
       width : '100%',
       position: 'relative',

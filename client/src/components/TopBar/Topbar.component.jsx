@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useReducer} from 'react';
 import {useHistory} from "react-router-dom";
 import {
   AppBar,
@@ -7,7 +7,9 @@ import {
   Button,
   makeStyles,
   Typography,
-  fade
+  fade,
+  Select,
+  MenuItem
 } from '@material-ui/core';
 
 
@@ -38,6 +40,12 @@ const useTopBarStyles = makeStyles((theme) => ({
   searchInput: {
     color: theme.palette.common.white
   },
+  select: {
+    color: theme.palette.common.white,
+    borderColor: theme.palette.common.white,
+    position: 'absolute',
+    right: '200px'
+  },
   logoutButton: {
     color: theme.palette.common.white,
     borderColor: theme.palette.common.white,
@@ -46,9 +54,17 @@ const useTopBarStyles = makeStyles((theme) => ({
   }
 }))
 
+const reducer = (currentState, updates) => ({
+  ...currentState,
+  ...updates
+})
+
 export const TopBar = (props) => {
   const history = useHistory()
   const classes = useTopBarStyles()
+  const [state, setState] = useReducer(reducer,  {
+    sortOrder: 'asc', search: ''
+  })
   let debounceTimeout;
 
   const onSignOut = () => {
@@ -60,7 +76,8 @@ export const TopBar = (props) => {
     if (debounceTimeout) 
       clearTimeout(debounceTimeout)
     debounceTimeout = setTimeout(() => {
-      props.onChange(val.value)
+      setState({search: val.value})
+      props.onSearchChange(val.value, state.sortOrder)
       debounceTimeout = null
     }, 500)
   }
@@ -83,6 +100,18 @@ export const TopBar = (props) => {
             (e) => debounceOnChange(e.target)
           }/>
       </div>
+      <Select
+          variant='outlined'
+          value={state.sortOrder}
+          onChange={(e) => {
+            props.onSearchChange(state.search, e.target.value)
+            setState({sortOrder: e.target.value})
+          }}
+          className={classes.select}
+        >
+          <MenuItem value="asc">Asc</MenuItem>
+          <MenuItem value="desc">Desc</MenuItem>
+        </Select>
       <Button className={
           classes.logoutButton
         }
@@ -90,6 +119,7 @@ export const TopBar = (props) => {
         onClick={onSignOut}>
         Sign Out
       </Button>
+      
     </Toolbar>
   </AppBar>
 }
