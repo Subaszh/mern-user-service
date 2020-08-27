@@ -2,22 +2,22 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { TextField, Button } from '@material-ui/core';
-import axios from 'axios'
+import { useNotification } from '../../hooks/use-notification';
+import { UserService } from '../../api'
 
 export const RegistrationPage = () => {
   const history = useHistory();
-  const { control, errors, handleSubmit, formState } = useForm({
-    mode: 'onBlur',
-    reValidateMode: 'onBlur'
+  const { sendNotification } = useNotification()
+  const { control, errors, handleSubmit } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange'
   });
 
-  const onSubmit = async (formData) => {
-    try {
-      const { data } = await axios.post('http://localhost:3000/users/register', formData)
+  const onSubmit = (formData) => {
+    UserService.register(formData).then(() => {
+      sendNotification('Registration Successful', 'success')
       history.push('/login')
-    } catch(e) {
-      alert(e?.response.data.error?.message || e)
-    }
+    }).catch(e => sendNotification(e, 'error'))
   };
 
   return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -52,7 +52,7 @@ export const RegistrationPage = () => {
         type="password"
       />
     <div className="button-holder">
-      <Button variant="contained" color="primary" disabled={!formState.isValid} type="submit"> Register </Button>
+      <Button variant="contained" color="primary" type="submit"> Register </Button>
       <Button variant="outlined" color="primary" onClick={() => history.push('/login')}> Sign In </Button>
     </div>
   </form>

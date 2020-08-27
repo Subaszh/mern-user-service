@@ -2,26 +2,28 @@ import React from 'react';
 import { useHistory } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import {TextField, Button} from '@material-ui/core';
-import axios from 'axios'
+import { useNotification } from '../../hooks/use-notification';
+import { UserService } from '../../api'
 
 import './login.page.css'
 
 export const LoginPage = () => {
   const history = useHistory();
-  
-  const { control, errors, handleSubmit, formState } = useForm({
-    mode: 'onBlur',
-    reValidateMode: 'onBlur'
+  const { sendNotification } = useNotification()
+
+  const { control, errors, handleSubmit } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onChange'
   });
 
-  const onSubmit = async (formData) => {
-    try {
-      const { data } = await axios.post('/users/login', formData)
-      localStorage.setItem('userId', data.id)
-      history.push('/companies')
-    } catch(e) {
-      alert(e?.response.data.error?.message || e)
-    }
+  const onSubmit = (formData) => {
+    UserService.login(formData).then(userId => {
+      if(userId) {
+        sendNotification("Login Successfull", "success")
+        localStorage.setItem('userId', userId)
+        history.push('/companies')
+      }
+    }).catch(e => sendNotification(e, "error"))
   };
 
   return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
@@ -46,8 +48,9 @@ export const LoginPage = () => {
         type="password"
       />
     <div className="button-holder">
-      <Button variant="contained" color="primary" disabled={!formState.isValid} type="submit"> Login </Button>
+      <Button variant="contained" color="primary" type="submit"> Login </Button>
       <Button variant="outlined" color="primary" onClick={() => history.push('/register')}> Register </Button>
+      <Button variant="outlined" color="primary" onClick={() => history.push('/reset-password')}> Reset Password </Button>
     </div>
   </form>
 }
