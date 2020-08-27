@@ -20,7 +20,7 @@ export const RegistrationPage = () => {
     }).catch(e => sendNotification(e, 'error'))
   };
 
-  return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)}>
+  return <form className="users-form"  onSubmit={handleSubmit(onSubmit)}>
     <Controller
         as={TextField}
         name="name"
@@ -31,16 +31,20 @@ export const RegistrationPage = () => {
         className="form-item form-input"
         helperText={errors?.email?.message ? "" : errors?.email?.message}
       />
+      {errors.name?.type === "required" && <span className="validation-error">User Name is required</span>}
+      
     <Controller
         as={TextField}
         name="email"
         control={control}
-        rules={{required: true}}
+        rules={{required: true, pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/}}
         variant="outlined"
         label="Email Address" 
         className="form-item form-input"
         helperText={errors?.email?.message ? "" : errors?.email?.message}
       />
+    {errors.email?.type === "required" && <span className="validation-error">Email is required</span>}
+    {errors.email?.type === "pattern" && <span className="validation-error">Not a Valid Email</span>}
     <Controller
         as={TextField}
         name="password"
@@ -51,6 +55,8 @@ export const RegistrationPage = () => {
         className="form-item form-input"
         type="password"
       />
+      {errors.password?.type === "required" && <span className="validation-error">Password is required</span>}
+      
     <div className="button-holder">
       <Button variant="contained" color="primary" type="submit"> Register </Button>
       <Button variant="outlined" color="primary" onClick={() => history.push('/login')}> Sign In </Button>

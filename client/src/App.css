@@ -19,3 +19,8 @@ body {
   width: 100%;
 }
 
+.validation-error {
+  font-size: 11px;
+  color: red
+}
+

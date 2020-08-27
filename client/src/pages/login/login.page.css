@@ -1,6 +1,7 @@
 .button-holder {
   display: flex;
   justify-content: space-between;
+  margin: 16px 0
 }
 .button-holder .MuiButtonBase-root {
   display: block;

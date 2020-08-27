@@ -4,7 +4,7 @@ import { Snackbar } from '@material-ui/core'
 import { Alert } from '@material-ui/lab'
 
 export const NotificationBar = () => {
-  const {notification, addNotification} = useNotification()
+  const {notification} = useNotification()
   const [open, setOpen] = useState(true)
   
   const handleClose = () => {

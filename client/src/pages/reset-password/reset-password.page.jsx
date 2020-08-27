@@ -21,17 +21,19 @@ export const ResetPasswordPage = () => {
     }).catch(e => sendNotification(e, 'error'))
   };
 
-  return <form className="users-form" noValidate autoComplete="off" onSubmit={handleSubmit(onSubmit)} >  
+  return <form className="users-form" onSubmit={handleSubmit(onSubmit)} >  
   <Controller
       as={TextField}
       name="email"
       control={control}
-      rules={{required: true, minLength: 5}}
+      rules={{required: true, pattern: /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/}}
       variant="outlined"
       label="Email Address" 
       className="form-item form-input"
       helperText={errors?.email?.message ? "" : errors?.email?.message}
     />
+    {errors.email?.type === "required" && <span className="validation-error">Email is required</span>}
+    {errors.email?.type === "pattern" && <span className="validation-error">Not a Valid Email</span>}
   <Controller
       as={TextField}
       name="currentPassword"
@@ -42,7 +44,7 @@ export const ResetPasswordPage = () => {
       className="form-item form-input"
       type="password"
     />
-  
+    {errors.currentPassword?.type === "required" && <span className="validation-error">Current Password is required</span>}
   <Controller
       as={TextField}
       name="newPassword"
@@ -53,6 +55,8 @@ export const ResetPasswordPage = () => {
       className="form-item form-input"
       type="password"
     />
+    {errors.newPassword?.type === "required" && <span className="validation-error">New Password is required</span>}
+
 
   <div className="button-holder">
     <Button variant="contained" color="primary" type="submit"> Reset Password </Button>
