@@ -2,7 +2,8 @@ import React, {useState, useCallback} from 'react';
 
 export const NotificationContext = React.createContext({
   notification: null,
-  sendNotification: () => {}
+  sendNotification: () => {},
+  removeNotification: () => {}
 })
 
 export const NotificationContextProvider = ({ children }) => {
@@ -12,6 +13,7 @@ export const NotificationContextProvider = ({ children }) => {
   const contextValue = {
     notification,
     sendNotification: useCallback((message, type) => sendNotification(message, type), []),
+    removeNotification: useCallback(() => setNotification(null))
   }
 
   return (
